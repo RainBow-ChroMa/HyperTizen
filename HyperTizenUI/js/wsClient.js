@@ -39,6 +39,16 @@ function onOpen() {
     setInterval(() => {
         send({ event: events.ScanSSDP });
     }, 10000);
+
+    setTimeout(() => {
+        const manualField = document.getElementById('manualRpc');
+        if (!canEnable && manualField && manualField.value) {
+            setRPC(manualField.value);
+            const enabledBox = document.getElementById('enabled');
+            enabledBox.checked = true;
+            enabledBox.onchange({ target: enabledBox });
+        }
+    }, 1000);
 }
 
 function onMessage(data) {

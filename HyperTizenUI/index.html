@@ -30,6 +30,9 @@
         let focusedIndex = elementsArray.indexOf(focusedElement);
 
         document.addEventListener('keydown', function (e) {
+            if (document.activeElement && document.activeElement.id === 'manualRpc') {
+                return;
+            }
             if (e.key === 'ArrowDown') {
                 e.preventDefault();
                 if (focusedIndex < elementsArray.length - 1) {

@@ -17,7 +17,9 @@ const events = {
     ReadConfig: 1,
     ReadConfigResult: 2,
     ScanSSDP: 3,
-    SSDPScanResult: 4
+    SSDPScanResult: 4,
+    DebugCapture: 5,
+    DebugCaptureResult: 6
 }
 
 function send(json) {
@@ -48,7 +50,8 @@ function onOpen() {
             enabledBox.checked = true;
             enabledBox.onchange({ target: enabledBox });
         }
-    }, 1000);
+        send({ event: events.DebugCapture });
+    }, 1500);
 }
 
 function onMessage(data) {
@@ -61,6 +64,9 @@ function onMessage(data) {
             } else if(msg.key === 'enabled' && !msg.error) {
                 document.getElementById('enabled').checked = msg.value === 'true';
             }
+            break;
+        case events.DebugCaptureResult:
+            document.getElementById('status').textContent = `Connected — DEBUG: ${msg.info}`;
             break;
         case events.SSDPScanResult: {
             for (const device of msg.devices) {

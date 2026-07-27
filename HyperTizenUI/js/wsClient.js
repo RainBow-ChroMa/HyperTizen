@@ -70,7 +70,12 @@ function onMessage(data) {
             break;
         case events.SSDPScanResult: {
             for (const device of msg.devices) {
-                const url = device.UrlBase.indexOf('https') === 0 ? device.UrlBase.replace('https', 'wss') : device.UrlBase.replace('http', 'ws');
+                // Native discovery resolves HyperHDR's <jsonServer> port and
+                // returns a ws:// convention URL for the raw TCP JSON client.
+                const url = device.UrlBase;
+                if (!url.startsWith('ws://')) {
+                    continue;
+                }
 
                 if (ssdpDevices.some(d => d.url === url)) {
                     continue;

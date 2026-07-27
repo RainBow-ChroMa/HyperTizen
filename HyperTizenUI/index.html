@@ -15,6 +15,8 @@
         <h1>HyperTizen</h1>
         <h3 id="status">Status</h3>
         <a><input type="checkbox" id="enabled"> Enabled</a>
+        <h2>Manual HyperHDR URL (bypass SSDP)</h2>
+        <input type="text" id="manualRpc" placeholder="ws://192.168.1.93:19444">
         <h2 id="ssdpDeviceTitle">SSDP Devices</h2>
         <div id="ssdpItems"></div>
     </div>
@@ -62,6 +64,12 @@
         });
 
         observer.observe(document.body, { childList: true, subtree: true });
+
+        document.getElementById('manualRpc').addEventListener('blur', function (e) {
+            if (e.target.value) {
+                setRPC(e.target.value);
+            }
+        });
         fetch('http://127.0.0.1:8081').then(res => res.text()).then(ip => {
             deviceIP = ip;
 

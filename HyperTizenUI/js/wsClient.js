@@ -27,7 +27,7 @@ function send(json) {
 }
 
 function onOpen() {
-    document.getElementById('status').innerHTML = 'Connected';
+    document.getElementById('status').textContent = 'Connected';
     document.getElementById('enabled').onchange = (e) => {
         if (!canEnable) {
             alert('Please select a device first');
@@ -77,11 +77,16 @@ function onMessage(data) {
                 }
                 
                 const friendlyName = device.FriendlyName;
-                document.getElementById('ssdpItems').innerHTML += `
-                <div class="ssdpItem" data-uri="${url}" data-friendlyName="${friendlyName}" tabindex="0" onclick="setRPC('${url}')">
-                    <a>${friendlyName}</a>
-                </div>
-                `;
+                const item = document.createElement('div');
+                const label = document.createElement('a');
+                item.className = 'ssdpItem';
+                item.dataset.uri = url;
+                item.dataset.friendlyName = friendlyName;
+                item.tabIndex = 0;
+                item.addEventListener('click', () => setRPC(url));
+                label.textContent = friendlyName;
+                item.appendChild(label);
+                document.getElementById('ssdpItems').appendChild(item);
                 ssdpDevices.push({ url, friendlyName });
             }
         }

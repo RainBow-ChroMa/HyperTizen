@@ -23,6 +23,10 @@ const events = {
 }
 
 function send(json) {
+    // The native side requires this field on every message (BasicEvent's
+    // protocolVersion is [JsonProperty(Required = Required.Always)]) - a
+    // message missing it is silently dropped, not just ignored.
+    json.protocolVersion = 1;
     client.send(JSON.stringify(json));
 }
 

@@ -1,8 +1,8 @@
 const interval = setInterval(() => {
     try {
-        tizen.application.getAppInfo('io.gh.reisxd.HyperTizen');
+        tizen.application.getAppInfo('io.gh.reisxd.HyperTizenX');
         tizen.application.launch(
-            'io.gh.reisxd.HyperTizen',
+            'io.gh.reisxd.HyperTizenX',
             function () {
                 console.log('Launch Service succeeded');
                 clearInterval(interval);
